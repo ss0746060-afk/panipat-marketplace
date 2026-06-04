@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="hi">
+<!DOCTYPE html>
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,11 +64,6 @@ border:none;
 padding:12px 20px;
 cursor:pointer;
 font-size:18px;
-transition: background 0.2s;
-}
-
-.search button:hover {
-background: #f3a847;
 }
 
 .banner{
@@ -100,11 +96,13 @@ background:white;
 border-radius:10px;
 overflow:hidden;
 box-shadow:0 2px 10px rgba(0,0,0,0.1);
-transition: transform 0.2s;
+/* कार्ड्स को सुंदर बनाने के लिए इफेक्ट */
+transition: transform 0.3s ease;
 }
 
+/* माउस ले जाने पर कार्ड ऊपर उठेगा */
 .card:hover {
-transform: translateY(-5px);
+transform: translateY(-8px);
 }
 
 .card img{
@@ -138,17 +136,18 @@ margin-bottom:15px;
 .btn{
 width:100%;
 padding:12px;
-background:#131921;
+background:#25D366; /* व्हाट्सएप ग्रीन कलर */
 color:white;
 border:none;
 border-radius:5px;
 cursor:pointer;
 font-size:16px;
+font-weight: bold;
 transition: background 0.2s;
 }
 
 .btn:hover{
-background: #232f3e;
+background: #128C7E;
 }
 
 .footer{
@@ -159,7 +158,6 @@ padding:20px;
 margin-top:30px;
 }
 
-/* अगर कोई प्रोडक्ट मैच न हो */
 .no-results {
 text-align: center;
 grid-column: 1 / -1;
@@ -172,12 +170,12 @@ padding: 40px;
 <body>
 
 <div class="header">
-<div class="logo" onclick="location.reload()">🛒 PANIPAT BAZAAR</div>
+<div class="logo" onclick="window.location.reload()">🛒 PANIPAT BAZAAR</div>
 <div class="account" onclick="alert('अकाउंट फीचर जल्द ही आ रहा है!')">👤 Account</div>
 </div>
 
 <div class="search">
-<input type="text" id="searchInput" placeholder="Search Products (e.g., iPhone, Bike, Sofa)..." onkeyup="searchProducts()">
+<input type="text" id="searchInput" placeholder="Search Products..." onkeyup="searchProducts()">
 <button onclick="searchProducts()">🔍</button>
 </div>
 
@@ -194,7 +192,7 @@ padding: 40px;
             <div class="price">₹48,000</div>
             <div class="title">iPhone 13 Pro</div>
             <div class="location">📍 Panipat</div>
-            <button class="btn" onclick="buyProduct('iPhone 13 Pro', '₹48,000')">Buy Now</button>
+            <button class="btn" onclick="buyProduct('iPhone 13 Pro', '₹48,000')">💬 Buy on WhatsApp</button>
         </div>
     </div>
 
@@ -204,7 +202,7 @@ padding: 40px;
             <div class="price">₹1,15,000</div>
             <div class="title">Royal Enfield Bullet</div>
             <div class="location">📍 Panipat</div>
-            <button class="btn" onclick="buyProduct('Royal Enfield Bullet', '₹1,15,000')">Buy Now</button>
+            <button class="btn" onclick="buyProduct('Royal Enfield Bullet', '₹1,15,000')">💬 Buy on WhatsApp</button>
         </div>
     </div>
 
@@ -214,7 +212,7 @@ padding: 40px;
             <div class="price">₹8,500</div>
             <div class="title">Wooden Sofa Set</div>
             <div class="location">📍 Panipat</div>
-            <button class="btn" onclick="buyProduct('Wooden Sofa Set', '₹8,500')">Buy Now</button>
+            <button class="btn" onclick="buyProduct('Wooden Sofa Set', '₹8,500')">💬 Buy on WhatsApp</button>
         </div>
     </div>
 
@@ -225,40 +223,48 @@ padding: 40px;
 </div>
 
 <script>
-// लाइव सर्च फंक्शन
+// 1. लाइव सर्च फंक्शन
 function searchProducts() {
     let input = document.getElementById('searchInput').value.toLowerCase();
     let cards = document.getElementsByClassName('product-item');
     let container = document.getElementById('productsContainer');
     let hasResults = false;
 
-    // पुरानी "No Results" का मैसेज हटाएं अगर मौजूद हो
     let oldMessage = document.getElementById('no-match');
     if(oldMessage) oldMessage.remove();
 
     for (let i = 0; i < cards.length; i++) {
         let title = cards[i].querySelector('.title').innerText.toLowerCase();
         if (title.includes(input)) {
-            cards[i].style.display = "";
+            cards[i].style.with = ""; 
+            cards[i].style.display = "block";
             hasResults = true;
         } else {
             cards[i].style.display = "none";
         }
     }
 
-    // अगर कोई प्रोडक्ट न मिले तो मैसेज दिखाएं
     if (!hasResults) {
         let noMatchDiv = document.createElement('div');
         noMatchDiv.id = 'no-match';
         noMatchDiv.className = 'no-results';
-        noMatchDiv.innerText = 'क्षमा करें, आपकी सर्च से मिलता-जुलता कोई प्रोडक्ट नहीं मिला।';
+        noMatchDiv.innerText = 'क्षमा करें, कोई प्रोडक्ट नहीं मिला।';
         container.appendChild(noMatchDiv);
     }
 }
 
-// बाई नाउ फंक्शन
-function buyProduct(name, price) {
-    alert(`🎉 बधाई हो! आपने ${name} खरीदने के लिए रिक्वेस्ट भेजी है जिसकी कीमत ${price} है। विक्रेता आपसे जल्द ही संपर्क करेगा।`);
+// 2. व्हाट्सएप पर भेजने वाला फंक्शन
+function buyProduct(productName, price) {
+    // यहाँ अपना असली फ़ोन नंबर डालें (बिना + या 0 के, जैसे 91XXXXXXXXXX)
+    let myPhoneNumber = "919999999999"; 
+    
+    let message = `नमस्ते! मुझे आपकी वेबसाइट Panipat Bazaar पर यह प्रोडक्ट पसंद आया है:\n\n🛍️ प्रोडक्ट: ${productName}\n💰 कीमत: ${price}\n\nक्या यह अभी उपलब्ध है?`;
+    
+    // यूआरएल को व्हाट्सएप के लिए एनकोड करना
+    let whatsappUrl = "https://api.whatsapp.com/send?phone=" + myPhoneNumber + "&text=" + encodeURIComponent(message);
+    
+    // नया टैब खोलकर व्हाट्सएप पर भेजना
+    window.open(whatsappUrl, '_blank');
 }
 </script>
 
