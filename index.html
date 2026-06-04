@@ -1,17 +1,381 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panipat Bazaar - Buy & Sell</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#eaeded;
+padding-bottom: 50px;
+}
+
+.header{
+background:#131921;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:white;
+flex-wrap:wrap;
+gap:10px;
+position: sticky;
+top: 0;
+z-index: 100;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+cursor: pointer;
+}
+
+.sell-btn {
+background: #ffffff;
+color: #131921;
+padding: 8px 18px;
+border-radius: 20px;
+font-weight: bold;
+cursor: pointer;
+border: 2px solid #febd69;
+transition: 0.2s;
+}
+
+.sell-btn:hover {
+background: #febd69;
+}
+
+.search-container {
+background: #232f3e;
+padding: 10px;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 10px;
+}
+
+.search{
+background:white;
+max-width:700px;
+display:flex;
+border-radius:6px;
+overflow:hidden;
+width:95%;
+}
+
+.search input{
+flex:1;
+padding:12px;
+border:none;
+outline:none;
+font-size:16px;
+}
+
+.search button{
+background:#febd69;
+border:none;
+padding:12px 20px;
+cursor:pointer;
+font-size:18px;
+}
+
+.categories {
+display: flex;
+gap: 10px;
+overflow-x: auto;
+width: 95%;
+max-width: 700px;
+padding: 5px 0;
+}
+
+.cat-tag {
+background: #37475a;
+color: white;
+padding: 6px 15px;
+border-radius: 15px;
+font-size: 14px;
+cursor: pointer;
+white-space: nowrap;
+border: none;
+}
+
+.cat-tag.active, .cat-tag:hover {
+background: #febd69;
+color: #131921;
+font-weight: bold;
+}
+
+.sell-form-section {
+background: white;
+max-width: 600px;
+margin: 20px auto;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+display: none;
+}
+
+.sell-form-section h2 {
+margin-bottom: 15px;
+color: #131921;
+text-align: center;
+}
+
+.form-group {
+margin-bottom: 15px;
+}
+
+.form-group label {
+display: block;
+margin-bottom: 5px;
+font-weight: bold;
+}
+
+.form-group input, .form-group select {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+outline: none;
+}
+
+.submit-btn {
+width: 100%;
+padding: 12px;
+background: #febd69;
+border: none;
+border-radius: 5px;
+font-size: 16px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.submit-btn:hover {
+background: #f3a847;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+padding:20px;
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+transition: transform 0.3s;
+position: relative;
+}
+
+.card:hover {
+transform: translateY(-5px);
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.card-content{
+padding:15px;
+}
+
+.price{
+font-size:24px;
+font-weight:bold;
+margin-bottom:5px;
+color: #B12704;
+}
+
+.title{
+font-size:18px;
+margin-bottom:5px;
+font-weight: bold;
+}
+
+.category-label {
+display: inline-block;
+background: #e7f3fe;
+color: #1877f2;
+padding: 3px 8px;
+font-size: 12px;
+border-radius: 4px;
+margin-bottom: 10px;
+font-weight: bold;
+}
+
+.location{
+color:gray;
+margin-bottom:15px;
+font-size: 14px;
+}
+
+.btn{
+width:100%;
+padding:12px;
+background:#25D366;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+font-size:16px;
+font-weight: bold;
+}
+
+.btn:hover{
+background: #128C7E;
+}
+
+/* नया डिलीट बटन सिर्फ यूजर के जोड़े सामान पर दिखेगा */
+.delete-btn {
+background: #ff4d4d;
+color: white;
+border: none;
+padding: 5px 10px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 12px;
+margin-top: 10px;
+width: 100%;
+}
+
+.delete-btn:hover {
+background: #cc0000;
+}
+
+.footer{
+background:#131921;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
+.no-results {
+text-align: center;
+grid-column: 1 / -1;
+font-size: 20px;
+color: #555;
+padding: 40px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo" onclick="window.location.reload()">🛒 PANIPAT BAZAAR</div>
+    <button class="sell-btn" onclick="toggleSellForm()">+ SELL</button>
+</div>
+
+<div class="search-container">
+    <div class="search">
+        <input type="text" id="searchInput" placeholder="मोबाइल, बाइक, सोफा सर्च करें..." onkeyup="filterProducts()">
+        <button onclick="filterProducts()">🔍</button>
+    </div>
+    
+    <div class="categories">
+        <button class="cat-tag active" onclick="filterCategory('all', this)">सब कुछ</button>
+        <button class="cat-tag" onclick="filterCategory('mobile', this)">📱 मोबाइल्स</button>
+        <button class="cat-tag" onclick="filterCategory('vehicle', this)">🏍️ गाड़ियां</button>
+        <button class="cat-tag" onclick="filterCategory('furniture', this)">🛋️ फर्नीचर</button>
+        <button class="cat-tag" onclick="filterCategory('other', this)">📦 अन्य</button>
+    </div>
+</div>
+
+<div class="sell-form-section" id="sellForm">
+    <h2>अपना सामान बेचें (Add Product)</h2>
+    <form id="productForm" onsubmit="addNewProduct(event)">
+        <div class="form-group">
+            <label>प्रोडक्ट का नाम</label>
+            <input type="text" id="pName" placeholder="उदा. iPhone 14, Hero Splendor" required>
+        </div>
+        <div class="form-group">
+            <label>कीमत (₹)</label>
+            <input type="number" id="pPrice" placeholder="उदा. 15000" required>
+        </div>
+        <div class="form-group">
+            <label>कैटेगरी चुनें</label>
+            <select id="pCategory" required>
+                <option value="mobile">मोबाइल्स (Mobile)</option>
+                <option value="vehicle">गाड़ियां (Vehicle)</option>
+                <option value="furniture">फर्नीचर (Furniture)</option>
+                <option value="other">अन्य (Other)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>फोटो का लिंक (Image URL)</label>
+            <input type="url" id="pImg" placeholder="इमेज लिंक डालें" value="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800">
+        </div>
+        <button type="submit" class="submit-btn">वेबसाइट पर लाइव करें</button>
+    </form>
+</div>
+
+<div class="products" id="productsContainer">
+    <!-- डिफ़ॉल्ट 3 प्रोडक्ट्स हमेशा रहेंगे -->
+    <div class="card product-item" data-category="mobile">
+        <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800" alt="iPhone">
+        <div class="card-content">
+            <div class="price">₹48,000</div>
+            <span class="category-label">📱 मोबाइल</span>
+            <div class="title">iPhone 13 Pro</div>
+            <div class="location">📍 Panipat</div>
+            <button class="btn" onclick="buyProduct('iPhone 13 Pro', '₹48,000')">💬 WhatsApp पर खरीदें</button>
+        </div>
+    </div>
+
+    <div class="card product-item" data-category="vehicle">
+        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800" alt="Bullet">
+        <div class="card-content">
+            <div class="price">₹1,15,000</div>
+            <span class="category-label">🏍️ गाड़ियां</span>
+            <div class="title">Royal Enfield Bullet</div>
+            <div class="location">📍 Panipat</div>
+            <button class="btn" onclick="buyProduct('Royal Enfield Bullet', '₹1,15,000')">💬 WhatsApp पर खरीदें</button>
+        </div>
+    </div>
+
+    <div class="card product-item" data-category="furniture">
+        <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=800" alt="Sofa">
+        <div class="card-content">
+            <div class="price">₹8,500</div>
+            <span class="category-label">🛋️ फर्नीचर</span>
+            <div class="title">Wooden Sofa Set</div>
+            <div class="location">📍 Panipat</div>
+            <button class="btn" onclick="buyProduct('Wooden Sofa Set', '₹8,500')">💬 WhatsApp पर खरीदें</button>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+© 2026 Panipat Bazaar
+</div>
+
 <script>
 let currentCategory = 'all';
 let productsList = [];
 
-// 1. वेबसाइट लोड होते ही LocalStorage से पुराने प्रोडक्ट्स को निकालना
+// पेज लोड होते ही लोकल स्टोरेज से डेटा लाना
 window.onload = function() {
     let savedProducts = localStorage.getItem('panipatBazaarProducts');
     if (savedProducts) {
         productsList = JSON.parse(savedProducts);
         displaySavedProducts();
     }
-}
+};
 
-// फॉर्म खोलने और बंद करने का फंक्शन
 function toggleSellForm() {
     let form = document.getElementById('sellForm');
     if(form.style.display === "block") {
@@ -22,7 +386,6 @@ function toggleSellForm() {
     }
 }
 
-// 2. नया प्रोडक्ट जोड़ने और उसे ब्राउज़र की मेमोरी में सेव करने का फंक्शन
 function addNewProduct(event) {
     event.preventDefault();
     
@@ -31,33 +394,25 @@ function addNewProduct(event) {
     let category = document.getElementById('pCategory').value;
     let img = document.getElementById('pImg').value;
     
-    // नए प्रोडक्ट का डेटा ऑब्जेक्ट बनाना
     let productData = {
-        id: Date.now(), // हर प्रोडक्ट की एक यूनिक आईडी
+        id: Date.now(),
         name: name,
         price: price,
         category: category,
         img: img
     };
 
-    // लिस्ट में सबसे आगे जोड़ना
     productsList.unshift(productData);
-
-    // ब्राउज़र की तिजोरी (LocalStorage) में हमेशा के लिए सेव करना
     localStorage.setItem('panipatBazaarProducts', JSON.stringify(productsList));
     
-    // स्क्रीन पर दिखाना
     displaySavedProducts();
 
-    // फॉर्म रीसेट करना और छुपाना
     document.getElementById('productForm').reset();
     document.getElementById('sellForm').style.display = "none";
-    alert("🎉 बधाई हो! आपका प्रोडक्ट हमेशा के लिए लाइव हो गया है (अब रीफ्रेश करने पर भी नहीं हटेगा)।");
+    alert("🎉 बधाई हो! आपका प्रोडक्ट हमेशा के लिए लाइव हो गया है।");
 }
 
-// 3. सेव किए गए प्रोडक्ट्स को स्क्रीन पर रेंडर (दिखाने) का फंक्शन
 function displaySavedProducts() {
-    // पहले से बने हुए यूजर के जोड़े कार्ड्स को हटाना (ताकि डुप्लीकेट न हों)
     let userCards = document.querySelectorAll('.user-added-product');
     userCards.forEach(card => card.remove());
 
@@ -81,20 +436,30 @@ function displaySavedProducts() {
                 <div class="title">${product.name}</div>
                 <div class="location">📍 Panipat</div>
                 <button class="btn" onclick="buyProduct('${product.name}', '₹${product.price}')">💬 WhatsApp पर खरीदें</button>
+                <button class="delete-btn" onclick="deleteProduct(${product.id})">🗑️ हटाएँ (Delete)</button>
             </div>
         `;
-        // डिफ़ॉल्ट 3 प्रोडक्ट्स के ठीक ऊपर नया सामान जोड़ना
         container.insertBefore(newCard, container.firstChild);
     });
 
-    filterProducts(); // फ़िल्टर लिस्ट अपडेट करना
+    filterProducts();
 }
 
-// कंबाइंड सर्च और कैटेगरी फ़िल्टर फंक्शन
+// डिलीट करने का फंक्शन
+function deleteProduct(id) {
+    if(confirm("क्या आप वाकई इस प्रोडक्ट को हटाना चाहते हैं?")) {
+        productsList = productsList.filter(product => product.id !== id);
+        localStorage.setItem('panipatBazaarProducts', JSON.stringify(productsList));
+        displaySavedProducts();
+    }
+}
+
 function filterCategory(cat, element) {
     currentCategory = cat;
     let tags = document.getElementsByClassName('cat-tag');
-    for(let tag of tags) tag.classList.remove('active');
+    for(let i=0; i<tags.length; i++) {
+        tags[i].classList.remove('active');
+    }
     element.classList.add('active');
     filterProducts();
 }
@@ -132,11 +497,13 @@ function filterProducts() {
     }
 }
 
-// व्हाट्सएप बाय फंक्शन
 function buyProduct(productName, price) {
-    let myPhoneNumber = "919999999999"; // अपना नंबर यहाँ डालें
+    let myPhoneNumber = "919999999999"; // यहाँ अपना असली नंबर डालें
     let message = `नमस्ते! मुझे Panipat Bazaar पर यह पसंद आया है:\n\n🛍️ प्रोडक्ट: ${productName}\n💰 कीमत: ${price}\n\nक्या यह उपलब्ध है?`;
     let whatsappUrl = "https://api.whatsapp.com/send?phone=" + myPhoneNumber + "&text=" + encodeURIComponent(message);
     window.open(whatsappUrl, '_blank');
 }
 </script>
+
+</body>
+</html>
