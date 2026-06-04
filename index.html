@@ -4,121 +4,221 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panipat Marketplace - Buy & Sell Old Items</title>
+    <!-- FontAwesome Icons for OLX look -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #f2f4f5; color: #002f34; }
+        
+        /* Modal Style (पॉपअप के लिए) */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 25px; border-radius: 8px; width: 90%; max-width: 450px; position: relative; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .close-btn { position: absolute; top: 15px; right: 15px; font-size: 20px; cursor: pointer; color: #777; }
+        
+        /* Input Styles */
+        .form-input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccd5d6; border-radius: 4px; outline: none; }
+        .form-btn { width: 100%; padding: 12px; background: #002f34; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .form-btn:hover { background: #005056; }
+    </style>
 </head>
-<body style="margin: 0; font-family: Arial, sans-serif; background-color: #f2f4f5; color: #002f34;">
+<body>
 
-    <!-- 1. ओएलएक्स जैसा टॉप हेडर -->
+    <!-- 1. ओएलएक्स जैसा हेडर -->
     <header style="background-color: #fff; padding: 10px 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;">
-        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
-            <div style="font-size: 24px; font-weight: bold; color: #002f34; letter-spacing: 1px;">
-                <i class="fa-solid fa-shop" style="color: #002f34;"></i> PANIPAT
+        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; gap: 15px;">
+            <div style="font-size: 24px; font-weight: bold; color: #002f34; letter-spacing: 1px; cursor: pointer;" onclick="location.reload();">
+                <i class="fa-solid fa-shop" style="color: #00bfb3;"></i> PANIPAT
             </div>
-            <button style="background: #fff; border: 5px solid; border-image: linear-gradient(to right, #ffce32, #3a77ff, #23e5db) 1; padding: 5px 15px; font-weight: bold; border-radius: 20px; cursor: pointer; color: #002f34;">
-                <i class="fa-solid fa-plus"></i> SELL
-            </button>
+            
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <!-- लॉगिन बटन जो काम करेगा -->
+                <span id="loginLink" style="font-weight: bold; cursor: pointer; border-bottom: 2px solid #002f34;" onclick="openModal('loginModal')">Login</span>
+                
+                <!-- सेल बटन जो काम करेगा -->
+                <button style="background: #fff; border: 5px solid; border-image: linear-gradient(to right, #ffce32, #3a77ff, #23e5db) 1; padding: 5px 15px; font-weight: bold; cursor: pointer; color: #002f34;" onclick="openModal('sellModal')">
+                    <i class="fa-solid fa-plus"></i> SELL
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- 2. सर्च बार सेक्शन -->
     <div style="background-color: #fff; padding: 15px; border-top: 1px solid #edeff0; text-align: center;">
         <div style="max-width: 600px; margin: 0 auto; display: flex; border: 2px solid #002f34; border-radius: 4px; overflow: hidden;">
-            <input type="text" placeholder="Find Cars, Mobile Phones, Bedsheets and more..." style="flex: 1; padding: 12px; border: none; outline: none; font-size: 14px;">
-            <button style="background-color: #002f34; border: none; padding: 0 20px; color: #fff; cursor: pointer;">
+            <input type="text" id="searchInput" onkeyup="searchItems()" placeholder="Find Cars, Mobile Phones, Bedsheets and more..." style="flex: 1; padding: 12px; border: none; outline: none; font-size: 14px;">
+            <button style="background-color: #002f34; border: none; padding: 0 20px; color: #fff;">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
         </div>
     </div>
 
-    <!-- 3. कैटेगरी सेक्शन -->
+    <!-- 3. कैटेगरीज -->
     <div style="max-width: 1200px; margin: 20px auto; padding: 0 15px;">
         <h3 style="font-size: 18px; margin-bottom: 15px;">Browse Categories</h3>
         <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;">
-            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
-            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-car"></i> Cars</div>
-            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-mattress-pillow"></i> Bedsheets</div>
-            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-laptop"></i> Electronics</div>
-            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-shirt"></i> Clothes</div>
+            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px; cursor: pointer;"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
+            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px; cursor: pointer;"><i class="fa-solid fa-car"></i> Cars</div>
+            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px; cursor: pointer;"><i class="fa-solid fa-mattress-pillow"></i> Bedsheets</div>
+            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px; cursor: pointer;"><i class="fa-solid fa-laptop"></i> Electronics</div>
         </div>
     </div>
 
-    <!-- 4. सामानों की लिस्ट (ओएलएक्स ग्रिड) -->
+    <!-- 4. सामानों की लिस्ट (क्लिक करने पर खुलेंगे) -->
     <main style="max-width: 1200px; margin: 0 auto; padding: 0 15px 40px 15px;">
         <h3 style="font-size: 18px; margin-bottom: 15px;">Fresh Recommendations</h3>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px;">
+        <div id="productGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px;">
             
-            <!-- आइटम 1 -->
-            <div style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative;">
-                <div style="height: 120px; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #888;">
-                    <i class="fa-solid fa-image fa-2x"></i>
-                </div>
-                <div style="padding: 10px; position: relative;">
+            <!-- आईफोन -->
+            <div class="product-card" data-title="iPhone 11 (128GB)" style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative; cursor: pointer;" onclick="openProduct('₹ 12,500', 'iPhone 11 (128GB) - White Color', 'Model Town, Panipat', 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500')">
+                <img src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=400" style="width: 100%; height: 140px; object-fit: cover;">
+                <div style="padding: 10px;">
                     <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">₹ 12,500</div>
-                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">iPhone 11 (128GB) - Super Condition</div>
-                    <div style="font-size: 11px; color: #406367; margin-top: 15px; display: flex; justify-content: space-between;">
-                        <span>Model Town, Panipat</span>
-                        <span>Today</span>
-                    </div>
+                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">iPhone 11 (128GB)</div>
+                    <div style="font-size: 11px; color: #777; margin-top: 10px;">Model Town, Panipat</div>
                 </div>
-                <i class="fa-regular fa-heart" style="position: absolute; top: 10px; right: 10px; background: white; padding: 6px; border-radius: 50%; color: #002f34; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></i>
             </div>
 
-            <!-- आइटम 2 -->
-            <div style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative;">
-                <div style="height: 120px; background-color: #d8dee9; display: flex; align-items: center; justify-content: center; color: #888;">
-                    <i class="fa-solid fa-image fa-2x"></i>
-                </div>
+            <!-- बेडशीट -->
+            <div class="product-card" data-title="Cotton Double Bedsheet" style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative; cursor: pointer;" onclick="openProduct('₹ 450', 'Pure Cotton Handloom Double Bedsheet with 2 Pillow Covers', 'Sukhdev Nagar, Panipat', 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=500')">
+                <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=400" style="width: 100%; height: 140px; object-fit: cover;">
                 <div style="padding: 10px;">
                     <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">₹ 450</div>
-                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pure Cotton Double Bedsheet</div>
-                    <div style="font-size: 11px; color: #406367; margin-top: 15px; display: flex; justify-content: space-between;">
-                        <span>Sukhdev Nagar</span>
-                        <span>Yesterday</span>
-                    </div>
+                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Cotton Double Bedsheet</div>
+                    <div style="font-size: 11px; color: #777; margin-top: 10px;">Sukhdev Nagar</div>
                 </div>
-                <i class="fa-regular fa-heart" style="position: absolute; top: 10px; right: 10px; background: white; padding: 6px; border-radius: 50%; color: #002f34; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></i>
             </div>
 
-            <!-- आइटम 3 -->
-            <div style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative;">
-                <div style="height: 120px; background-color: #e5e9f0; display: flex; align-items: center; justify-content: center; color: #888;">
-                    <i class="fa-solid fa-image fa-2x"></i>
-                </div>
+            <!-- बाइक -->
+            <div class="product-card" data-title="Splendor Plus 2021" style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative; cursor: pointer;" onclick="openProduct('₹ 35,000', 'Hero Splendor Plus 2021 Model, First Owner, 15000km driven.', 'Sector 11, Panipat', 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=500')">
+                <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=400" style="width: 100%; height: 140px; object-fit: cover;">
                 <div style="padding: 10px;">
                     <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">₹ 35,000</div>
-                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Splendor Plus 2021 Model</div>
-                    <div style="font-size: 11px; color: #406367; margin-top: 15px; display: flex; justify-content: space-between;">
-                        <span>Sector 11, Panipat</span>
-                        <span>2 days ago</span>
-                    </div>
+                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Splendor Plus 2021</div>
+                    <div style="font-size: 11px; color: #777; margin-top: 10px;">Sector 11, Panipat</div>
                 </div>
-                <i class="fa-regular fa-heart" style="position: absolute; top: 10px; right: 10px; background: white; padding: 6px; border-radius: 50%; color: #002f34; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></i>
             </div>
 
-            <!-- आइटम 4 -->
-            <div style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative;">
-                <div style="height: 120px; background-color: #eceff4; display: flex; align-items: center; justify-content: center; color: #888;">
-                    <i class="fa-solid fa-image fa-2x"></i>
-                </div>
+            <!-- स्टडी टेबल -->
+            <div class="product-card" data-title="Wooden Study Table" style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative; cursor: pointer;" onclick="openProduct('₹ 1,200', 'Strong Wooden Table for Students with Drawer.', 'Gohana Road, Panipat', 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=500')">
+                <img src="https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=400" style="width: 100%; height: 140px; object-fit: cover;">
                 <div style="padding: 10px;">
                     <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">₹ 1,200</div>
-                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Old Wooden Study Table</div>
-                    <div style="font-size: 11px; color: #406367; margin-top: 15px; display: flex; justify-content: space-between;">
-                        <span>Gohana Road</span>
-                        <span>5 days ago</span>
-                    </div>
+                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Wooden Study Table</div>
+                    <div style="font-size: 11px; color: #777; margin-top: 10px;">Gohana Road</div>
                 </div>
-                <i class="fa-regular fa-heart" style="position: absolute; top: 10px; right: 10px; background: white; padding: 6px; border-radius: 50%; color: #002f34; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></i>
             </div>
 
         </div>
     </main>
 
-    <!-- फुटर -->
-    <footer style="background-color: #002f34; color: #fff; text-align: center; padding: 15px; font-size: 12px;">
+    <!-- पॉपअप 1: लॉगिन फॉर्म -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
+            <h2 style="margin-bottom: 15px; color: #002f34;">Login to Panipat OLX</h2>
+            <input type="email" placeholder="Email Address" class="form-input">
+            <input type="password" placeholder="Password" class="form-input">
+            <button class="form-btn" onclick="doLogin()">Login Now</button>
+        </div>
+    </div>
+
+    <!-- पॉपअप 2: सामान बेचने का फॉर्म (SELL) -->
+    <div id="sellModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('sellModal')">&times;</span>
+            <h2 style="margin-bottom: 15px; color: #002f34;">Post Your Item</h2>
+            <input type="text" id="itemName" placeholder="Item Name (e.g., Cycle)" class="form-input">
+            <input type="text" id="itemPrice" placeholder="Price (₹)" class="form-input">
+            <input type="text" id="itemLoc" placeholder="Your Location in Panipat" class="form-input">
+            <button class="form-btn" onclick="addNewItem()">Submit Ad</button>
+        </div>
+    </div>
+
+    <!-- पॉपअप 3: प्रोडक्ट डिटेल्स (जब किसी सामान पर क्लिक करेंगे) -->
+    <div id="productModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
+            <img id="pModalImg" src="" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px; margin-bottom: 15px;">
+            <h2 id="pModalPrice" style="color: #002f34; margin-bottom: 5px;"></h2>
+            <h3 id="pModalTitle" style="font-size: 18px; margin-bottom: 10px; color: #333;"></h3>
+            <p id="pModalLoc" style="font-size: 14px; color: #777; margin-bottom: 20px;"><i class="fa-solid fa-location-dot"></i> </p>
+            <a href="https://wa.me/919999999999" target="_blank" style="text-decoration: none;"><button class="form-btn" style="background: #25D366;"><i class="fa-brands fa-whatsapp"></i> Chat with Seller</button></a>
+        </div>
+    </div>
+
+    <footer style="background-color: #002f34; color: #fff; text-align: center; padding: 15px; font-size: 12px; margin-top: 20px;">
         <p>© 2026 Panipat Marketplace | Buy and Sell Old Items Online</p>
     </footer>
 
+    <!-- जादुई जावास्क्रिप्ट कोडिंग जो सब कुछ चालू करेगी -->
+    <script>
+        // पॉपअप खोलने और बंद करने के लिए
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // लॉगिन का नाटक (Simulation) करने के लिए
+        function doLogin() {
+            alert('बधाई हो! आप सफलतापूर्वक लॉगिन हो चुके हैं।');
+            document.getElementById('loginLink').innerText = "👤 My Profile";
+            closeModal('loginModal');
+        }
+
+        // सामान पर क्लिक करने पर उसकी पूरी जानकारी खोलने के लिए
+        function openProduct(price, title, loc, imgUrl) {
+            document.getElementById('pModalImg').src = imgUrl;
+            document.getElementById('pModalPrice').innerText = price;
+            document.getElementById('pModalTitle').innerText = title;
+            document.getElementById('pModalLoc').innerHTML = '<i class="fa-solid fa-location-dot"></i> ' + loc;
+            openModal('productModal');
+        }
+
+        // सर्च बार में टाइप करने पर सामान फ़िल्टर करने के लिए
+        function searchItems() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('product-card');
+            for (let i = 0; i < cards.length; i++) {
+                let title = cards[i].getAttribute('data-title').toLowerCase();
+                if (title.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        // नया सामान जोड़ने के लिए (जब तक पेज रीफ्रेश नहीं होगा, यह दिखेगा)
+        function addNewItem() {
+            let name = document.getElementById('itemName').value;
+            let price = document.getElementById('itemPrice').value;
+            let loc = document.getElementById('itemLoc').value;
+            
+            if(!name || !price || !loc) { alert('कृपया सभी जानकारी भरें!'); return; }
+
+            let grid = document.getElementById('productGrid');
+            let dummyImg = "https://images.unsplash.com/photo-1544816155-12df9643f363?w=400"; // डिफ़ॉल्ट बुक/सामान की फोटो
+            
+            let newCard = document.createElement('div');
+            newCard.className = "product-card";
+            newCard.setAttribute('data-title', name);
+            newCard.style = "background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative; cursor: pointer;";
+            newCard.onclick = function() { openProduct('₹ ' + price, name, loc + ', Panipat', dummyImg); };
+            
+            newCard.innerHTML = `
+                <img src="${dummyImg}" style="width: 100%; height: 140px; object-fit: cover;">
+                <div style="padding: 10px;">
+                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">₹ ${price}</div>
+                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${name}</div>
+                    <div style="font-size: 11px; color: #777; margin-top: 10px;">${loc}</div>
+                </div>
+            `;
+            
+            grid.insertBefore(newCard, grid.firstChild);
+            alert('आपका विज्ञापन सफलतापूर्वक लाइव जोड़ दिया गया है!');
+            closeModal('sellModal');
+        }
+    </script>
 </body>
 </html>
+
