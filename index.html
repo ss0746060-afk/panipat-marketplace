@@ -1,1 +1,124 @@
-<h1>Welcome to my website!</h1>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panipat Marketplace - Buy & Sell Old Items</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body style="margin: 0; font-family: Arial, sans-serif; background-color: #f2f4f5; color: #002f34;">
+
+    <!-- 1. ओएलएक्स जैसा टॉप हेडर -->
+    <header style="background-color: #fff; padding: 10px 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100;">
+        <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+            <div style="font-size: 24px; font-weight: bold; color: #002f34; letter-spacing: 1px;">
+                <i class="fa-solid fa-shop" style="color: #002f34;"></i> PANIPAT
+            </div>
+            <button style="background: #fff; border: 5px solid; border-image: linear-gradient(to right, #ffce32, #3a77ff, #23e5db) 1; padding: 5px 15px; font-weight: bold; border-radius: 20px; cursor: pointer; color: #002f34;">
+                <i class="fa-solid fa-plus"></i> SELL
+            </button>
+        </div>
+    </header>
+
+    <!-- 2. सर्च बार सेक्शन -->
+    <div style="background-color: #fff; padding: 15px; border-top: 1px solid #edeff0; text-align: center;">
+        <div style="max-width: 600px; margin: 0 auto; display: flex; border: 2px solid #002f34; border-radius: 4px; overflow: hidden;">
+            <input type="text" placeholder="Find Cars, Mobile Phones, Bedsheets and more..." style="flex: 1; padding: 12px; border: none; outline: none; font-size: 14px;">
+            <button style="background-color: #002f34; border: none; padding: 0 20px; color: #fff; cursor: pointer;">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 3. कैटेगरी सेक्शन -->
+    <div style="max-width: 1200px; margin: 20px auto; padding: 0 15px;">
+        <h3 style="font-size: 18px; margin-bottom: 15px;">Browse Categories</h3>
+        <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;">
+            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
+            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-car"></i> Cars</div>
+            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-mattress-pillow"></i> Bedsheets</div>
+            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-laptop"></i> Electronics</div>
+            <div style="background: white; padding: 10px 20px; border-radius: 4px; border: 1px solid #ccd5d6; white-space: nowrap; font-weight: bold; font-size: 14px;"><i class="fa-solid fa-shirt"></i> Clothes</div>
+        </div>
+    </div>
+
+    <!-- 4. सामानों की लिस्ट (ओएलएक्स ग्रिड) -->
+    <main style="max-width: 1200px; margin: 0 auto; padding: 0 15px 40px 15px;">
+        <h3 style="font-size: 18px; margin-bottom: 15px;">Fresh Recommendations</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px;">
+            
+            <!-- आइटम 1 -->
+            <div style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative;">
+                <div style="height: 120px; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #888;">
+                    <i class="fa-solid fa-image fa-2x"></i>
+                </div>
+                <div style="padding: 10px; position: relative;">
+                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">₹ 12,500</div>
+                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">iPhone 11 (128GB) - Super Condition</div>
+                    <div style="font-size: 11px; color: #406367; margin-top: 15px; display: flex; justify-content: space-between;">
+                        <span>Model Town, Panipat</span>
+                        <span>Today</span>
+                    </div>
+                </div>
+                <i class="fa-regular fa-heart" style="position: absolute; top: 10px; right: 10px; background: white; padding: 6px; border-radius: 50%; color: #002f34; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></i>
+            </div>
+
+            <!-- आइटम 2 -->
+            <div style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative;">
+                <div style="height: 120px; background-color: #d8dee9; display: flex; align-items: center; justify-content: center; color: #888;">
+                    <i class="fa-solid fa-image fa-2x"></i>
+                </div>
+                <div style="padding: 10px;">
+                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">₹ 450</div>
+                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Pure Cotton Double Bedsheet</div>
+                    <div style="font-size: 11px; color: #406367; margin-top: 15px; display: flex; justify-content: space-between;">
+                        <span>Sukhdev Nagar</span>
+                        <span>Yesterday</span>
+                    </div>
+                </div>
+                <i class="fa-regular fa-heart" style="position: absolute; top: 10px; right: 10px; background: white; padding: 6px; border-radius: 50%; color: #002f34; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></i>
+            </div>
+
+            <!-- आइटम 3 -->
+            <div style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative;">
+                <div style="height: 120px; background-color: #e5e9f0; display: flex; align-items: center; justify-content: center; color: #888;">
+                    <i class="fa-solid fa-image fa-2x"></i>
+                </div>
+                <div style="padding: 10px;">
+                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">₹ 35,000</div>
+                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Splendor Plus 2021 Model</div>
+                    <div style="font-size: 11px; color: #406367; margin-top: 15px; display: flex; justify-content: space-between;">
+                        <span>Sector 11, Panipat</span>
+                        <span>2 days ago</span>
+                    </div>
+                </div>
+                <i class="fa-regular fa-heart" style="position: absolute; top: 10px; right: 10px; background: white; padding: 6px; border-radius: 50%; color: #002f34; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></i>
+            </div>
+
+            <!-- आइटम 4 -->
+            <div style="background-color: #fff; border: 1px solid #ccd5d6; border-radius: 4px; overflow: hidden; position: relative;">
+                <div style="height: 120px; background-color: #eceff4; display: flex; align-items: center; justify-content: center; color: #888;">
+                    <i class="fa-solid fa-image fa-2x"></i>
+                </div>
+                <div style="padding: 10px;">
+                    <div style="font-size: 18px; font-weight: bold; margin-bottom: 5px;">₹ 1,200</div>
+                    <div style="font-size: 14px; color: #406367; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Old Wooden Study Table</div>
+                    <div style="font-size: 11px; color: #406367; margin-top: 15px; display: flex; justify-content: space-between;">
+                        <span>Gohana Road</span>
+                        <span>5 days ago</span>
+                    </div>
+                </div>
+                <i class="fa-regular fa-heart" style="position: absolute; top: 10px; right: 10px; background: white; padding: 6px; border-radius: 50%; color: #002f34; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"></i>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- फुटर -->
+    <footer style="background-color: #002f34; color: #fff; text-align: center; padding: 15px; font-size: 12px;">
+        <p>© 2026 Panipat Marketplace | Buy and Sell Old Items Online</p>
+    </footer>
+
+</body>
+</html>
