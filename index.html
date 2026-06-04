@@ -1,14 +1,41 @@
-<header class="top-header">
-    <div class="logo">PANIPAT BAZAAR</div>
+.top-header{
+    background:#131921;
+    color:white;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    flex-wrap:wrap;
+}
 
-    <div class="search-box">
-        <input type="text" placeholder="Panipat Bazaar में खोजें...">
-        <button>🔍</button>
-    </div>
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
 
-    <div class="menu">
-        <span>Account</span>
-        <span>Orders</span>
-        <span>Sell</span>
-    </div>
-</header>
+.search-box{
+    display:flex;
+    flex:1;
+    max-width:600px;
+}
+
+.search-box input{
+    flex:1;
+    padding:10px;
+    border:none;
+}
+
+.search-box button{
+    background:#febd69;
+    color:black;
+    border:none;
+    padding:10px 15px;
+    cursor:pointer;
+}
+
+.menu{
+    display:flex;
+    gap:15px;
+    font-size:14px;
+}
